@@ -38,7 +38,15 @@ directionalLight4.position.set(-500, 0, 0);
 directionalLight4.castShadow = true;
 scene.add(directionalLight4);
 
-let loader = new OBJLoader();
+const manager = new THREE.LoadingManager();
+manager.onStart = function (url, itemsLoaded, itemsTotal) {
+  console.log(url, itemsLoaded, itemsTotal);
+}
+manager.onLoad = function () {
+  console.log('loaded all resources')
+}
+
+const loader = new OBJLoader(manager);
 loader.load('bust_Einstein.obj', function (object) {
   object.traverse(function (child) {
     if (child instanceof THREE.Mesh) {
@@ -56,6 +64,24 @@ loader.load('bust_Einstein.obj', function (object) {
 
 var controls = new OrbitControls(camera, renderer.domElement);
 controls.enableZoom = false;
+controls.enablePan = false;
+controls.enableDamping = true;
+controls.dampingFactor = 0.25;
+controls.autoRotate = false;
+controls.autoRotateSpeed = 0.5;
+controls.maxPolarAngle = Math.PI / 1.5;
+controls.minPolarAngle = Math.PI / 4;
+
+controls.addEventListener('start', function () {
+  if (controls.autoRotate) {
+    controls.autoRotate = false;
+  }
+  setTimeout(() => {
+    controls.autoRotate = true;
+  }, 1000);
+});
+
+
 
 function resizeRendererToDisplaySize(renderer) {
   const canvas = renderer.domElement;
