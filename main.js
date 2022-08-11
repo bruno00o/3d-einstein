@@ -61,7 +61,6 @@ loader.load('bust_Einstein.obj', function (object) {
   scene.add(object);
 });
 
-
 var controls = new OrbitControls(camera, renderer.domElement);
 controls.enableZoom = false;
 controls.enablePan = false;
@@ -80,8 +79,6 @@ controls.addEventListener('start', function () {
     controls.autoRotate = true;
   }, 1000);
 });
-
-
 
 function resizeRendererToDisplaySize(renderer) {
   const canvas = renderer.domElement;
