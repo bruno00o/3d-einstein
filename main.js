@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 const canvas = document.querySelector('#c');
 const renderer = new THREE.WebGLRenderer({ alpha: true, canvas });
 
@@ -46,17 +46,17 @@ manager.onLoad = function () {
   console.log('loaded all resources')
 }
 
-const loader = new OBJLoader(manager);
-loader.load('bust_Einstein.obj', function (object) {
+const loader = new GLTFLoader(manager);
+loader.load('einstein.gltf', function (gltf) {
+  let object = gltf.scene.children[0];
   object.traverse(function (child) {
     if (child instanceof THREE.Mesh) {
       child.material.color.setRGB(.240, .233, .216);
       child.material.emissive.setRGB(.240, .233, .216);
-      child.material.shininess = 2;
     }
     object.scale.set(2, 2, 2);
   });
-  let geometry = object.children[0].geometry;
+  let geometry = object.geometry;
   geometry.center();
   scene.add(object);
 });
