@@ -53,6 +53,8 @@ loader.load('einstein.gltf', function (gltf) {
     if (child instanceof THREE.Mesh) {
       child.material.color.setRGB(.240, .233, .216);
       child.material.emissive.setRGB(.240, .233, .216);
+      child.material.emissiveIntensity = .75;
+      child.material.shininess = .1;
     }
     object.scale.set(2, 2, 2);
   });
